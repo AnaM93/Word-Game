@@ -1,24 +1,32 @@
 
 let guessedWord = '';
-const parentDiv = document.querySelectorAll('.index-input')
-parentDiv.forEach( function (divElement, index, arrayList) {
-    divElement.querySelectorAll('input').forEach(function(listElement, i, arr) {
-        listElement.addEventListener('keyup', function (event) {
-            guessWord (event.target.value, i, word, listElement)
-            focusInput(listElement, i+1, arr)
-            guessedWord += event.target.value;
+const parentDiv = document.querySelectorAll('.index-input') 
+parentDiv.forEach( function (divElement, index, arrayList) { 
+    divElement.querySelectorAll('input').forEach(function(listElement, i, arr) { 
+        listElement.addEventListener('keyup', function (event) {    
+            if (i===0) {
+                guessedWord = ''
+            }
+            guessWord (event.target.value, i, word, listElement)    
+            focusInput(listElement, i+1, arr)                       
+            guessedWord += event.target.value;                      
+            alertWin();                                             
             console.log(guessedWord)
-            alertWin();
 
         })
+         
     })
+
     
 })
+
+
+
 
 function alertWin () {
     if (guessedWord === word.join('')) {
         alert('You Win!!')
-    }
+    }   
 }
 
 function focusInput (currentInput, nextIndex, listInput) {
@@ -28,6 +36,8 @@ function focusInput (currentInput, nextIndex, listInput) {
         }
     }
 }
+
+
 
 let word = [];
 
@@ -41,6 +51,7 @@ async function fetchWord () {
 function saveWord (response) {
     const splittedWord = response.split('')
     splittedWord.forEach(w => word.push(w)) 
+    
 }
 
 fetchWord();
@@ -64,8 +75,8 @@ function guessWord (letter, index, arr, input) {
 
 }
 
-//verific daca litera se regaseste in array
-//daca da - compar indexul inputului cu indexul elementului din array
-            // daca este = se va colora inputul cu verde    
-            // daca nu este = se va colora inputul cu galben
-//daca nu - colorez inputul cu gri
+if (guessedWord !== word.join('')) {
+    alert(`You lose!`)
+}
+
+
